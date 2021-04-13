@@ -1,0 +1,21 @@
+<table class="table">
+  <thead class="thead-light">
+  <tr>
+    <th>Серия-Номер</th>
+    <th>Дата заключения</th>
+    <th>Страхователь</th>
+    <th>Премия</th>
+    <th>Срок действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let contract of contracts" (dblclick)="openByDblclick(contract)">
+    <td>{{contract.number}}</td>
+    <td>{{contract.calculateDate | date: "dd.MM.yyyy"}}</td>
+    <td>{{contract.insurer?.firstName}} {{contract.insurer?.lastName}} {{contract.insurer?.secondName}}</td>
+    <td>{{contract.insuranceObject?.insurancePremium | number: "1.2"}}</td>
+    <td>{{contract.insurancePeriodFrom| date: "dd.MM.yyyy"}}-
+      {{contract.insurancePeriodTo| date: "dd.MM.yyyy"}}</td>
+  </tr>
+  </tbody>
+</table>

@@ -70,7 +70,7 @@ export class RequestService {
 
   logout(): void {
     // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    localStorage.removeItem('principal');
     this.principalSubject.next(null);
     this.router.navigate(['/login']);
   }

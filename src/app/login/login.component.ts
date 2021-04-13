@@ -19,11 +19,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: RequestService,
+    private requestService: RequestService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
   ) {
-    this.authenticationService.principal.subscribe(x => this.principal = x);
+    this.requestService.principal.subscribe(x => this.principal = x);
   }
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    this.requestService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -65,6 +65,6 @@ export class LoginComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticationService.logout();
+    this.requestService.logout();
   }
 }

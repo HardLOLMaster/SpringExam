@@ -5,22 +5,25 @@ import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {ContractComponent} from './contracts/contract.component';
+import {ContractsComponent} from './contracts/contracts.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './helper/auth.guard';
+import {ContractComponent} from "./contract/contract.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ContractComponent
+    ContractsComponent,
+    ContractComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: '', component: ContractComponent, canActivate: [AuthGuard]},
+      {path: '', component: ContractsComponent, canActivate: [AuthGuard]},
+      {path: 'contract', component: ContractComponent, canActivate: [AuthGuard]},
       {path: 'login', component: LoginComponent},
       {path: '**', redirectTo: ''}
     ])
