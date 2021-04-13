@@ -1,5 +1,5 @@
-<table class="table">
-  <thead class="thead-light">
+<table class="table bg-dark">
+  <thead class="thead-dark">
   <tr>
     <th>Серия-Номер</th>
     <th>Дата заключения</th>
@@ -9,7 +9,22 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let contract of contracts" (dblclick)="openByDblclick(contract)">
+
+  <tr *ngIf="loading" class="text-light">
+    <td class="align-items-center">
+      <strong>Loading...</strong>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+      <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </td>
+  </tr>
+
+  <tr class="text-light" *ngFor="let contract of contracts" (dblclick)="openByDblclick(contract)"
+      (click)="select(contract)"
+      [class.highlighted]="highlight(contract)">
     <td>{{contract.number}}</td>
     <td>{{contract.calculateDate | date: "dd.MM.yyyy"}}</td>
     <td>{{contract.insurer?.firstName}} {{contract.insurer?.lastName}} {{contract.insurer?.secondName}}</td>

@@ -1,5 +1,5 @@
 import {Individual} from "./individual";
-import {PropertyInsuranceObject} from "./propertyInsuranceObject";
+import {PropertyInsuranceObject} from "./property.insurance.object";
 
 export class PropertyInsuranceContract {
   id: number;

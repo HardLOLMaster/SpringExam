@@ -13,5 +13,9 @@
   user-select: none;
 }
 .table tr:hover {
-  background-color: burlywood;
+  background-color: #323232;
+}
+
+.highlighted {
+  background-color: #214283;
 }

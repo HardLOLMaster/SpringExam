@@ -1,0 +1,66 @@
+<div class="card">
+  <div class="card-body bg-dark text-light">
+    <form class="pl-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <fieldset>
+        <legend>Рассчет</legend>
+
+        <div class="form-group row">
+          <label for="insuranceSum" class="col-sm-0 col-form-label pl-3">Страховая сумма</label>
+          <div class="col-sm-3">
+            <input id="insuranceSum" type="number" formControlName="insuranceSum" class="form-control">
+          </div>
+          <label for="insurancePeriodFrom" class="col-sm-0 col-form-label pl-5">Срок действия с</label>
+          <div class="col-sm-2">
+            <input id="insurancePeriodFrom" type="date" formControlName="insurancePeriodFrom" class="form-control">
+          </div>
+          <label for="insurancePeriodTo" class="col-sm-0 col-form-label">по</label>
+          <div class="col-sm-2">
+            <input id="insurancePeriodTo" type="date" formControlName="insurancePeriodTo" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="propertyType" class="col-sm-0 col-form-label">Тип недвижимости</label>
+          <div class="col-sm-3">
+            <select id="propertyType" class="form-control">
+              <option>Квартира</option>
+              <option>Дом</option>
+              <option>Комната</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="constructionYear" class="col-sm-0 col-form-label pl-4">Год постройки</label>
+          <div class="col-sm-3 pl-4 pr-2">
+            <select id="constructionYear" class="form-control">
+              <option></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="area" class="col-sm-0 col-form-label pl-4">Площадь, кв.м.</label>
+          <div class="col-sm-3 pl-4 pr-2">
+            <input id="area" type="number" formControlName="insuranceSum" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+          <button class="btn btn-info">Рассчитать</button>
+        </div>
+
+        <div class="form-group row justify-content-center">
+          <label for="calculateDate" class="col-sm-0 col-form-label">Дата расчета</label>
+          <div class="col-sm-2">
+            <input id="calculateDate" type="date" formControlName="insuranceSum" class="form-control">
+          </div>
+          <label for="premium" class="col-sm-0 col-form-label pl-5">Премия</label>
+          <div class="col-sm-2">
+            <input id="premium" type="number" formControlName="insuranceSum" class="form-control">
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

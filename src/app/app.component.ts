@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Principal} from './domain/principal';
 import {RequestService} from './services/request.service';
+import {PropertyInsuranceContract} from "./domain/property.insurance.contract";
 
 @Component({
   selector: 'app-root',
@@ -18,5 +19,17 @@ export class AppComponent {
 
   logout(): void {
     this.requestService.logout();
+  }
+
+  createNewContract() {
+    this.requestService.openContract(new PropertyInsuranceContract());
+  }
+
+  openContract() {
+    let contractValue = this.requestService.contractValue;
+    if (contractValue)
+      this.requestService.openContract(contractValue);
+    else
+      alert("Выберите договор");
   }
 }
