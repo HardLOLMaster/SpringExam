@@ -9,5 +9,5 @@ export class Address {
   housing: string;
   building: string;
   apartment: number;
-  Street: string;
+  street: string;
 }

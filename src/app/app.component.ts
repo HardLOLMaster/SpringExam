@@ -22,7 +22,7 @@ export class AppComponent {
   }
 
   createNewContract() {
-    this.requestService.openContract(new PropertyInsuranceContract());
+    this.requestService.openContract(null);
   }
 
   openContract() {

@@ -4,10 +4,11 @@ import {PropertyInsuranceObject} from "./property.insurance.object";
 export class PropertyInsuranceContract {
   id: number;
   number: string;
-  insurancePeriodFrom: Date;
-  insurancePeriodTo: Date;
-  calculateDate: Date;
-  conclusionDate: Date;
+  insurancePeriodFrom: Date = null;
+  insurancePeriodTo: Date = null;
+  calculateDate: Date = null;
+  conclusionDate: Date = null;
   insurer: Individual;
   insuranceObject: PropertyInsuranceObject;
+  comment: string;
 }
