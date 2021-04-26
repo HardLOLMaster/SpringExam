@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RequestService} from "../services/request.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {PropertyInsuranceContract} from "../domain/property.insurance.contract";
 import {PropertyInsuranceObject} from "../domain/property.insurance.object";
 import {formatDate} from "@angular/common";
@@ -11,6 +11,7 @@ import {Address} from "../domain/address";
 import {ChooseInsurerComponent} from "./insurer/choose/choose.insurer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangeInsurerComponent} from "./insurer/change/change.insurer.component";
+import * as moment from 'moment';
 
 @Component({
   templateUrl: './contract.component.html',
@@ -61,7 +62,6 @@ export class ContractComponent implements OnInit {
       this.afterCalcForm,
       this.insurerForm,
       this.propertyForm,
-      this.commentForm,
       this.contractInfo,
     ]
   }
@@ -88,6 +88,7 @@ export class ContractComponent implements OnInit {
       this.contract.insuranceObject = new PropertyInsuranceObject();
       this.contract.insuranceObject.address = new Address();
       this.contract.insurer = new Individual();
+      this.contract.conclusionDate = new Date(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
       this.requestService.contractSet(this.contract)
     }
 
@@ -140,11 +141,40 @@ export class ContractComponent implements OnInit {
     }
   }
 
+  insurancePeriodFromValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value) {
+        let insurancePeriodFromLessThenToday = new Date(formatDate(control.value, 'yyyy-MM-dd', 'en')) < new Date(formatDate(new Date(), 'yyyy-MM-dd', 'en'));
+        if (insurancePeriodFromLessThenToday)
+          return {'insurancePeriodFromLessThenTo': insurancePeriodFromLessThenToday};
+      }
+      return null;
+    };
+  }
+
+  insurancePeriodToValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      let contract = this.requestService.contractValue;
+      if (control.value && contract.insurancePeriodFrom) {
+
+        let date = new Date(formatDate(control.value, 'yyyy-MM-dd', 'en'));
+        let insurancePeriodToBiggerThenFrom = date > contract.insurancePeriodFrom;
+        if (!insurancePeriodToBiggerThenFrom)
+          return {'insurancePeriodToBiggerThenFrom': insurancePeriodToBiggerThenFrom};
+        let years = moment(date).diff(moment(contract.insurancePeriodFrom), "years");
+        let insurancePeriodToBiggerOneYearThenFrom = years >= 1;
+        if (insurancePeriodToBiggerOneYearThenFrom)
+          return {'insurancePeriodToBiggerOneYearThenFrom': insurancePeriodToBiggerOneYearThenFrom};
+      }
+      return null;
+    };
+  }
+
   private createCalcForm() {
     this.calcForm = this.formBuilder.group({
       insuranceSum: ['', Validators.required],
-      insurancePeriodFrom: ['', Validators.required],
-      insurancePeriodTo: ['', Validators.required],
+      insurancePeriodFrom: ['', [Validators.required, this.insurancePeriodFromValidator()]],
+      insurancePeriodTo: ['', [Validators.required, this.insurancePeriodToValidator()]],
       propertyType: ['', Validators.required],
       constructionYear: ['', Validators.required],
       area: ['', Validators.required],
@@ -213,7 +243,7 @@ export class ContractComponent implements OnInit {
 
   private createContractInfoForm() {
     this.contractInfo = this.formBuilder.group({
-      contractNumber: ['', Validators.required],
+      contractNumber: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       conclusionDate: ['', Validators.required],
     });
 
@@ -240,8 +270,8 @@ export class ContractComponent implements OnInit {
       region: ['', Validators.required],
       city: ['', Validators.required],
       street: ['', Validators.required],
-      house: ['', Validators.required],
-      apartment: [''],
+      house: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      apartment: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       index: [''],
       building: [''],
       housing: [''],
@@ -291,12 +321,14 @@ export class ContractComponent implements OnInit {
   }
 
   openChooseInsurerWindow() {
+    this.requestService.contractSet(this.contract);
     this.dialog.open(ChooseInsurerComponent, {
       width: '750px',
     });
   }
 
   updateInsurer() {
+    this.requestService.contractSet(this.contract);
     this.dialog.open(ChangeInsurerComponent, {
       width: '750px',
       data: this.contract.insurer
@@ -304,17 +336,28 @@ export class ContractComponent implements OnInit {
   }
 
   save() {
+    this.requestService.contractSet(this.contract);
     let commandObject = new CommandObject();
     commandObject.command = 'saveContractAction'
     commandObject.payload = this.contract
     this.requestService.request(commandObject).subscribe(value => {
       if (value.ok) {
-        this.requestService.contractSet(value.payload)
+        this.requestService.contractSet(null)
+        this.router.navigate(['/']);
       }
     })
   }
 
   toContracts() {
+    this.requestService.contractSet(null);
     this.router.navigate(['/']);
+  }
+
+  allFormsValid(): boolean {
+    let result = false;
+    for (const form of this.allForms) {
+      result = result || form.valid
+    }
+    return result
   }
 }

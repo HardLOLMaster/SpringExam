@@ -18,7 +18,7 @@
             <label for="secondName" class="col-0 col-form-label pl-3">(отчество)</label>
           </div>
           <div class="col-1">
-            <button class="btn btn-info" (click)="find()">Найти</button>
+            <button class="btn btn-info" (click)="find()" [disabled]="!insurerForm.valid">Найти</button>
           </div>
         </div>
 
@@ -34,6 +34,7 @@
 
           <tr class="text-light" *ngFor="let insurer of insurers"
               (click)="select(insurer)"
+              (dblclick)="closeAndSelect()"
               [class.highlighted]="highlight(insurer)">
             <td>{{insurer.firstName}} {{insurer.lastName}} {{insurer.secondName}}</td>
             <td>{{insurer.birthday | date: "dd.MM.yyyy"}}</td>

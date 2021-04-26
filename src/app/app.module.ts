@@ -16,6 +16,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {NewInsurerComponent} from "./contract/insurer/new/new.insurer.component";
 import {ChangeInsurerComponent} from "./contract/insurer/change/change.insurer.component";
+import {NgxMaskModule} from "ngx-mask";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {ChangeInsurerComponent} from "./contract/insurer/change/change.insurer.c
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

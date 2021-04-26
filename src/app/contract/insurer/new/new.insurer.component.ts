@@ -49,7 +49,7 @@ export class NewInsurerComponent implements OnInit {
 
   save() {
     let commandObject = new CommandObject();
-    commandObject.command = 'saveIndividualAction'
+    commandObject.command = 'saveIndividualNoDocAction'
     commandObject.payload = this.insurer
     this.requestService.request(commandObject).subscribe(value => {
       if (value.ok) {

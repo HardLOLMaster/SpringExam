@@ -7,7 +7,8 @@
         <div class="form-group row">
           <label for="insuranceSum" class="col-0 col-form-label pl-3">Страховая сумма</label>
           <div class="col-3">
-            <input id="insuranceSum" type="number" formControlName="insuranceSum" class="form-control">
+            <input id="insuranceSum" type="text" formControlName="insuranceSum" class="form-control"
+                   [allowNegativeNumbers]="false" mask="separator.2">
           </div>
           <label for="insurancePeriodFrom" class="col-0 col-form-label pl-5 pr-2">Срок действия с</label>
           <div class="">
@@ -44,7 +45,8 @@
         <div class="form-group row">
           <label for="area" class="col-0 col-form-label pl-4">Площадь, кв.м.</label>
           <div class="col-3 pl-4 pr-2">
-            <input id="area" type="number" formControlName="area" class="form-control">
+            <input id="area" type="text" formControlName="area" class="form-control"
+                   [allowNegativeNumbers]="false" mask="separator.1">
           </div>
         </div>
 
@@ -205,7 +207,7 @@
   <div class="card-body bg-dark">
     <div class="form-group row justify-content-around">
       <div class="col-3 pl-3 pr-3">
-        <button class="btn btn-info" (click)="save()">Сохранить</button>
+        <button class="btn btn-info" (click)="save()" [disabled]="!allFormsValid()">Сохранить</button>
       </div>
       <div class="col-3 pl-3 pr-3">
         <button class="btn btn-info" (click)="toContracts()">К списку договоров</button>

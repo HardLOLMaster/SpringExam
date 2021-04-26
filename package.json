@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 3000 --open",
+    "start": "ng serve --port 4200 --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,10 +21,12 @@
     "@angular/router": "~11.2.8",
     "@angular/cdk": "~11.2.8",
     "@angular/material": "~11.2.8",
+    "ngx-mask": "^11.1.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3",
-    "bootstrap": "^4.5.2"
+    "bootstrap": "^4.5.2",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.7",

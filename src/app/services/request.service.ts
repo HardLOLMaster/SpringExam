@@ -42,7 +42,7 @@ export class RequestService {
       authorization: 'Basic ' + btoa(username + ':' + password)
     });
     const commandObject = new CommandObject();
-    commandObject.command = 'getAllContractsAction';
+    commandObject.command = 'loginAction';
     commandObject.payload = null;
     const options = {headers: httpHeaders};
     return this.http.post<any>('property.insurance', commandObject, options)
